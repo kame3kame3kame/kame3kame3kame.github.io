@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mikomugi315 アプリ一覧</title>
+<style>
+  :root{ --bg1:#16306B; --bg2:#2E6FD6; --card:#ffffff; --text:#1d1d1f; --sub:#6b7280; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+        background:linear-gradient(160deg,var(--bg1),var(--bg2)); color:var(--text);
+        min-height:100vh; }
+  header{ text-align:center; color:#fff; padding:64px 20px 28px; }
+  header h1{ margin:0; font-size:2rem; letter-spacing:1px; }
+  header p{ margin:10px 0 0; opacity:.9; }
+  main{ max-width:720px; margin:0 auto; padding:8px 16px 64px; }
+  .card{ background:var(--card); border-radius:18px; padding:20px; margin:16px 0;
+         display:flex; gap:16px; align-items:flex-start;
+         box-shadow:0 10px 30px rgba(0,0,0,.18); }
+  .icon{ width:72px; height:72px; border-radius:16px; flex:none; object-fit:cover; }
+  .icon.placeholder{ display:flex; align-items:center; justify-content:center;
+        background:#e8eefc; color:#2E6FD6; font-size:32px; font-weight:700; }
+  .body{ flex:1; min-width:0; }
+  .body h2{ margin:2px 0 6px; font-size:1.15rem; }
+  .body .desc{ margin:0 0 12px; color:var(--sub); font-size:.95rem; line-height:1.6; }
+  .btns{ display:flex; flex-wrap:wrap; gap:8px; }
+  .btn{ display:inline-block; padding:8px 14px; border-radius:999px; font-size:.85rem;
+        text-decoration:none; color:#2E6FD6; background:#eef3fe; }
+  .btn.primary{ background:#2E6FD6; color:#fff; }
+  .btn:hover{ opacity:.85; }
+  footer{ text-align:center; color:#fff; opacity:.8; font-size:.8rem; padding:0 20px 48px; }
+  footer a{ color:#fff; }
+</style>
+</head>
+<body>
+<header>
+  <h1>mikomugi315</h1>
+  <p>つくったアプリの一覧です。</p>
+</header>
+<main id="app-list"></main>
+<footer>© 2026 mikomugi315</footer>
+
+<script>
+/* =========================================================
+   アプリを追加するときは、この apps 配列に1つ追記するだけ。
+   - name: アプリ名
+   - desc: 説明（1〜2行）
+   - icon: アイコン画像のパス（無ければ "" でOK。頭文字が表示されます）
+   - appStore: App StoreのURL（無ければ "" で非表示）
+   - links: 補足リンク（プライバシーポリシー等）。{label, url} を並べる
+   ========================================================= */
+const apps = [
+  {
+    name: "SportsLog（観戦記録）",
+    desc: "スポーツ観戦の記録・予定・統計をまとめて残せるアプリ。",
+    icon: "icons/sportslog.png",
+    appStore: "",
+    links: [
+      { label: "プライバシーポリシー", url: "https://boulder-trouble-ac6.notion.site/SportsLog-6c06dfdac7914fb390fedfbd4fb2ebd9" },
+      { label: "利用規約", url: "https://boulder-trouble-ac6.notion.site/37844140375080859a5fd8cecd8a9117" }
+    ]
+  },
+  {
+    name: "こころの温度計",
+    desc: "こころの状態をやさしく記録するアプリ。",
+    icon: "",
+    appStore: "",
+    links: [
+      { label: "詳細・プライバシー", url: "https://boulder-trouble-ac6.notion.site/75f8b9423cb14728b827fa836b64121d" }
+    ]
+  }
+];
+
+const list = document.getElementById("app-list");
+list.innerHTML = apps.map(app => {
+  const icon = app.icon
+    ? `<img class="icon" src="${app.icon}" alt="">`
+    : `<div class="icon placeholder">${app.name.charAt(0)}</div>`;
+  let btns = "";
+  if (app.appStore) btns += `<a class="btn primary" href="${app.appStore}">App Storeで見る</a>`;
+  (app.links || []).forEach(l => { btns += `<a class="btn" href="${l.url}">${l.label}</a>`; });
+  return `<div class="card">${icon}
+    <div class="body">
+      <h2>${app.name}</h2>
+      <p class="desc">${app.desc}</p>
+      <div class="btns">${btns}</div>
+    </div></div>`;
+}).join("");
+</script>
+</body>
+</html>
